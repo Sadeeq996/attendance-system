@@ -1,1 +1,36 @@
 <p>dashboard works!</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/history']">History</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Welcome, {{user?.fullName}}</h2>
+  <!-- <p>Today's date: {{ (new Date()).toDateString() }}</p> -->
+    <p>Today's date: {{ today }}</p>
+
+  <div *ngIf="assignedShift; else noShift">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Your assigned shift today</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <h3>{{assignedShift | uppercase}}</h3>
+        <p>Tap to record attendance</p>
+
+        <ion-button expand="block" (click)="clockIn()">Clock In</ion-button>
+        <ion-button expand="block" fill="outline" (click)="clockOut()">Clock Out</ion-button>
+
+        <div *ngIf="message" style="margin-top:12px">{{message}}</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ng-template #noShift>
+    <ion-note color="medium">No shift assigned for today. Contact your admin.</ion-note>
+  </ng-template>
+</ion-content>
